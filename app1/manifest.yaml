@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1
+  labels:
+    project: roboshop
+    tier: backend
+    component: app1
+spec:
+  selector:
+    matchLabels:
+      project: roboshop
+      tier: backend
+      component: app1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        tier: backend
+        component: app1   
+    spec:
+      containers:
+        - name: app1
+          image: saithota9/app1:1.0.0
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app1
+  labels:
+    project: roboshop
+    tier: backend
+    component: app1 
+spec:
+  selector:
+    project: roboshop
+    tier: backend
+    component: app1 
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
